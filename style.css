@@ -1,0 +1,11 @@
+body {
+    background-color: blue;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+#gameCanvas {
+    background-color: blue;
+}
