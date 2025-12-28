@@ -6,13 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     gameCanvas.height = innerHeight;
 
     let floor = 500;
-    let rectX = 100;
+    let jump = false;
     let rectY = 500;
+
+    let rectX = 100;
     let speed = 4;
-    let animationId;
     let moveRight = false;
     let moveLeft = false;
-    let jump = false;
+
+    let animationId;
+    let elapsed = null;
 
     document.addEventListener('keydown', event => {
         if (event.code === 'KeyD' && !moveRight) {
@@ -47,11 +50,19 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.fillStyle = "blue";
             ctx.fillRect(rectX + 100, rectY, 100, 100); 
         } if (jump === true) {
-            rectY -= speed; //somehow stop this
-            ctx.fillStyle = "blue";
-            ctx.fillRect(rectX, rectY + 100, 100, 100);
-            if (rectY <= floor - 100) {
-                rectY += speed * 2; //fix this
+            const startTime = performance.now();
+            elapsed = performance.now() - startTime;
+
+            if (elapsed <= 1000) {
+                rectY--;
+
+                ctx.fillStyle = "blue";
+                ctx.fillRect(rectX, rectY + 100, 100, 100,);
+            } else {
+                rectY++;
+
+                ctx.fillStyle = "blue";
+                ctx.fillRect(rectX, rectY - 100, 100, 100);
             }
         }
         
