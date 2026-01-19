@@ -1,9 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const gameCanvas = document.getElementById('gameCanvas');
     const ctx = gameCanvas.getContext('2d');
 
     gameCanvas.width = innerWidth;
     gameCanvas.height = innerHeight;
+
+    let bullet;
+    let bulletSpeed;
+    let shoot = false;
 
     let floor = 500;
     let jump = false;
@@ -75,7 +79,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }) 
 
+    document.addEventListener('keydown', event => {
+        if (event.code === 'KeyV') {
+            shoot = true;
+        }
+        
+    })
+
+    //bullet logic
+
+    function bulletFunc() {
+
+        if (shoot === true) {
+            ctx.fillStyle = "black";
+            ctx.fillRect(bulletY, bulletX, 15, 15); // find way to find bulletX and bulletY correctly
+        }
+    }
+
     function gameLoop() {
+
+        bulletFunc()
 
         ctx.fillStyle = "green";
         ctx.fillRect(rectX2, rectY2, 100, 100);
