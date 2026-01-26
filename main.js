@@ -5,10 +5,7 @@
     gameCanvas.width = innerWidth;
     gameCanvas.height = innerHeight;
 
-    let bulletX = 50;
-    let bulletY = 50;
-    let bullet;
-    let bulletSpeed;
+    let bulletSpeed = 25;
     let shoot = false;
 
     let floor = 500;
@@ -87,27 +84,38 @@
         }
     })
 
-    document.addEventListener('keyup', event => {
-        if (event.code === 'KeyV') {
-            shoot = false;
-        }
-    })
-
     //bullet logic
 
-    function bulletFunc() {
+    function bullet() {
+        let bulletX = rectX2 + 100;
+        let bulletY = rectY2;
 
         if (shoot === true) {
-            bulletX = rectX2 + 100;
-            bulletY = rectY2;
+
+            bulletX += bulletSpeed;
 
             ctx.fillStyle = "black";
-            bulletX += speed * 2;
-            ctx.fillRect(bulletX, bulletY, 15, 15); // find way to find bulletX and bulletY correctly
+            ctx.fillRect(bulletX, bulletY, 15, 15); 
+
+            ctx.fillStyle = "blue";
+            ctx.fillRect(bulletX - 125, bulletY, 15, 15);
+        }
+
+        if (bulletX >= 600) {
+            ctx.fillStyle = "blue";
+            ctx.fillRect(bulletX, bulletY, 200, 15);
+            if (bulletX >= 700) {
+                shoot = false;
+                bulletX = rectX2 + 100;
+            }
         }
     }
 
+    //gameloop
+
     function gameLoop() {
+
+        bullet()
 
         ctx.fillStyle = "green";
         ctx.fillRect(rectX2, rectY2, 100, 100);
@@ -208,8 +216,6 @@
                 }
             }
         }
-
-        bulletFunc()
         
         animationId = requestAnimationFrame(gameLoop);
     }
