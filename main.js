@@ -28,11 +28,21 @@
     let startTime;
     let startTime2;
 
+    let bulletX;
+    let bulletY;
+
+    let facingRight1;
+    let facingRight2;
+
+    //player2 movement detection
+
     document.addEventListener('keydown', event => {
         if (event.code === 'ArrowRight' && !moveRight2) {
             moveRight2 = true;
+            facingRight2 = true;
         } else if (event.code === 'ArrowLeft' && !moveLeft2) {
             moveLeft2 = true;
+            facingRight2 = false;
         }
     })
 
@@ -43,6 +53,8 @@
             moveLeft2 = false;
         }
     }) 
+
+    //jump2 detection
     
     document.addEventListener('keydown', event => {
         if (event.code !== 'ArrowUp') {return;}
@@ -53,11 +65,14 @@
         }
     }) 
 
+    //player1 movement detection
+
     document.addEventListener('keydown', event => {
         if (event.code === 'KeyD' && !moveRight) {
             moveRight = true;
         } else if (event.code === 'KeyA' && !moveLeft) {
-            moveLeft = true;      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+            moveLeft = true;      
+            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
         }
     })
 
@@ -69,6 +84,8 @@
         }
     }) 
 
+    //jump1 detection
+
     document.addEventListener('keydown', event => {
         if (event.code !== 'Space') {return;}
   
@@ -78,27 +95,43 @@
         }
     }) 
 
+    //player2 shoot detection
+
     document.addEventListener('keydown', event => {
         if (event.code === 'KeyV') {
             shoot = true;
+
+            if (facingRight2) {
+                bulletX = rectX2 + 100;
+                bulletY = rectY2;
+            } else {
+                bulletX = rectX2 - 10;
+                bulletY = rectY2;
+            }
         }
     })
 
     //bullet logic
 
     function bullet() {
-        let bulletX = rectX2 + 100;
-        let bulletY = rectY2;
-
         if (shoot === true) {
+            if (facingRight2 === true) {
+                bulletX += bulletSpeed;
 
-            bulletX += bulletSpeed;
+                ctx.fillStyle = "black";
+                ctx.fillRect(bulletX, bulletY, 15, 15); 
 
-            ctx.fillStyle = "black";
-            ctx.fillRect(bulletX, bulletY, 15, 15); 
+                ctx.fillStyle = "blue";
+                ctx.fillRect(bulletX - 125, bulletY, 15, 15);
+            } else if (facingRight2 === false) {
+                bulletX -= bulletSpeed;
 
-            ctx.fillStyle = "blue";
-            ctx.fillRect(bulletX - 125, bulletY, 15, 15);
+                ctx.fillStyle = "black";
+                ctx.fillRect(bulletX, bulletY, 15, 15); 
+
+                ctx.fillStyle = "blue";
+                ctx.fillRect(bulletX + 125, bulletY, 15, 15);
+            }
         }
 
         if (bulletX >= 600) {
