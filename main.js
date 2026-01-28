@@ -6,6 +6,7 @@
     gameCanvas.height = innerHeight;
 
     let bulletSpeed = 25;
+    let shoot2 = false;
     let shoot = false;
 
     let floor = 500;
@@ -31,8 +32,11 @@
     let bulletX;
     let bulletY;
 
+    let bulletX2;
+    let bulletY2
+
     let facingRight1;
-    let facingRight2;
+    let facingRight2 = true;
 
     //player2 movement detection
 
@@ -98,49 +102,85 @@
     //player2 shoot detection
 
     document.addEventListener('keydown', event => {
-        if (event.code === 'KeyV') {
-            shoot = true;
+        if (event.code === 'KeyM') {
+            shoot2 = true;
 
             if (facingRight2) {
-                bulletX = rectX2 + 100;
-                bulletY = rectY2;
+                bulletX2 = rectX2 + 100;
+                bulletY2 = rectY2;
             } else {
-                bulletX = rectX2 - 10;
-                bulletY = rectY2;
+                bulletX2 = rectX2 - 10;
+                bulletY2 = rectY2;
             }
         }
     })
 
+    document.addEventListener('keydown', event => {
+        if (event.code === 'KeyV') {
+            shoot = true;
+
+            if (facingRight1) {
+                bulletX = rectX + 100;
+                bulletY = rectY;
+            } else {
+                bulletX = rectX - 10;
+                bulletY = rectY;
+            }
+        }
+    })    
+
     //bullet logic
 
     function bullet() {
-        if (shoot === true) {
-            if (facingRight2 === true) {
-                bulletX += bulletSpeed;
+        if (shoot === true && facingRight1 === true) { 
+            bulletX += bulletSpeed;
 
-                ctx.fillStyle = "black";
-                ctx.fillRect(bulletX, bulletY, 15, 15); 
+            ctx.fillStyle = "black";
+            ctx.fillRect(bulletX, bulletY, 15, 15); 
 
-                ctx.fillStyle = "blue";
-                ctx.fillRect(bulletX - 125, bulletY, 15, 15);
-            } else if (facingRight2 === false) {
-                bulletX -= bulletSpeed;
+            ctx.fillStyle = "blue";
+            ctx.fillRect(bulletX - 125, bulletY, 15, 15);
+        } else if (shoot === true && facingRight1 === false) {
+            bulletX -= bulletSpeed;
 
-                ctx.fillStyle = "black";
-                ctx.fillRect(bulletX, bulletY, 15, 15); 
+            ctx.fillStyle = "black";
+            ctx.fillRect(bulletX, bulletY, 15, 15); 
 
-                ctx.fillStyle = "blue";
-                ctx.fillRect(bulletX + 125, bulletY, 15, 15);
-            }
+            ctx.fillStyle = "blue";
+            ctx.fillRect(bulletX + 125, bulletY, 15, 15);
         }
 
-        if (bulletX >= 600) {
+        if (shoot2 === true && facingRight2 === true) { 
+            bulletX2 += bulletSpeed;
+
+            ctx.fillStyle = "black";
+            ctx.fillRect(bulletX2, bulletY2, 15, 15); 
+
             ctx.fillStyle = "blue";
-            ctx.fillRect(bulletX, bulletY, 200, 15);
-            if (bulletX >= 700) {
-                shoot = false;
-                bulletX = rectX2 + 100;
-            }
+            ctx.fillRect(bulletX2 - 125, bulletY2, 15, 15);
+        } else if (shoot2 === true && facingRight2 === false) {
+            bulletX2 -= bulletSpeed;
+
+            ctx.fillStyle = "black";
+            ctx.fillRect(bulletX2, bulletY2, 15, 15); 
+
+            ctx.fillStyle = "blue";
+            ctx.fillRect(bulletX2 + 125, bulletY2, 15, 15);
+        }
+
+
+        if (bulletX2 >= 1400) {
+            shoot2 = false;
+            bulletX2 = rectX2 + 100;
+        } else if (bulletX2 <= -110) {
+            shoot2 = false;
+        }
+
+        if (bulletX >= 1400) {
+            shoot = false;
+            bulletX = rectX + 100;
+        } else if (bulletX <= -110) {
+            shoot = false;
         }
     }
 
