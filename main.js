@@ -1,9 +1,28 @@
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const gameCanvas = document.getElementById('gameCanvas');
     const ctx = gameCanvas.getContext('2d');
 
+    //declaring variables 
+    
     gameCanvas.width = innerWidth;
     gameCanvas.height = innerHeight;
+
+    const belleLeftFrame1 = new Image();
+        belleLeftFrame1.src = "belleLeftFrame1.png";
+
+    const belleLeftFrame2 = new Image();
+        belleLeftFrame2.src = "belleLeftFrame2.png";
+
+    const belleLeftFrame3 = new Image();
+        belleLeftFrame3.src = "belleLeftFrame3.png";
+
+    let belleLeftFrames = [belleLeftFrame1, belleLeftFrame2, belleLeftFrame3];
+
+    for(let i = 0; i < 3; i++) {
+        belleLeftFrames[i].onload() = () => {
+            ctx.drawImage(belleLeftFrames[1], 0, 0, 130, 130);
+        };
+    }
 
     let bulletSpeed = 25;
     let shoot2 = false;
@@ -37,6 +56,8 @@
 
     let facingRight1;
     let facingRight2 = true;
+
+    //movement keybindings
 
     //player2 movement detection
 
@@ -132,6 +153,9 @@
     //bullet logic
 
     function bullet() {
+
+        //bullet1 ->
+
         if (shoot === true && facingRight1 === true) { 
             bulletX += bulletSpeed;
 
@@ -150,14 +174,16 @@
             ctx.fillRect(bulletX + 125, bulletY, 15, 15);
         }
 
+        //bullet2 ->
+
         if (shoot2 === true && facingRight2 === true) { 
             bulletX2 += bulletSpeed;
 
-            ctx.fillStyle = "black";
-            ctx.fillRect(bulletX2, bulletY2, 15, 15); 
-
             ctx.fillStyle = "blue";
             ctx.fillRect(bulletX2 - 125, bulletY2, 15, 15);
+
+            ctx.fillStyle = "black";
+            ctx.fillRect(bulletX2, bulletY2, 15, 15); 
         } else if (shoot2 === true && facingRight2 === false) {
             bulletX2 -= bulletSpeed;
 
@@ -184,7 +210,7 @@
         }
     }
 
-    //gameloop
+    //gameloop, main function
 
     function gameLoop() {
 
