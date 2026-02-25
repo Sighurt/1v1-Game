@@ -18,11 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let belleLeftFrames = [belleLeftFrame1, belleLeftFrame2, belleLeftFrame3];
 
-    for(let i = 0; i < 3; i++) {
-        belleLeftFrames[i].onload() = () => {
+    
+/*    for(let i = 0; i < 3; i++) {
+        belleLeftFrames[i].onload = () => {
             ctx.drawImage(belleLeftFrames[1], 0, 0, 130, 130);
         };
-    }
+    } */
 
     let bulletSpeed = 25;
     let shoot2 = false;
@@ -274,25 +275,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //movement/hitboxes logic red
 
-        if (rectX + 100 <= rectX2) {
-            if (rectX <= 700 && moveRight == true && rectX + 100 <= rectX2) {
+        if (rectX + 100 <= rectX2) { //if red box is left of green one, and is moving right
+            if (rectX <= 700 && moveRight == true) {
                 rectX += speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX - 100, rectY, 100, 100); 
             }
-        } else {
-            if (rectX <= 700 && moveRight == true && rectX >= rectX2 + 100) {
+        } else { //if red box is right of green one, and moving right
+            if (rectX <= 700 && moveRight == true) {
                 rectX += speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX - 100, rectY, 100, 100); 
             }
-        } if (rectX >= rectX2 + 100) {
-            if (rectX >= 0 && moveLeft == true) { //finish hitboxes
+        } if (rectX + 100 <= rectX2) { //if red box is right of green one, and moving left
+            if (rectX >= 0 && moveLeft == true) { 
                 rectX -= speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX + 100, rectY, 100, 100); 
             }
-        } 
+        } else {
+            if (rectX >= 0 && moveLeft == true) {
+                rectX -= speed;
+                ctx.fillStyle = "blue";
+                ctx.fillRect(rectX + 100, rectY, 100, 100);
+            }
+        }
         
         //jump logic red
         
