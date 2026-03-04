@@ -232,19 +232,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctx.fillRect(rectX2 - 100, rectY2, 100, 100);
             }
         } else {
-            if (rectX2 <= 700 && moveRight2 == true && rectX2 >= rectX + 96) {
+            if (rectX2 <= 700 && moveRight2 == true && rectX2 >= rectX + 96 && rectY2 - 20 <= rectY ) {
                 rectX2 += speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX2 - 100, rectY2, 100, 100);
             }
         } if (rectX2 >= rectX + 100){
-            if (rectX2 >= 0 && moveLeft2 == true && rectX2 >= rectX + 100) {
+            if (rectX2 >= 0 && moveLeft2 == true && rectX2 >= rectX + 100 && rectY2 - 20 <= rectY) {
                 rectX2 -= speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX2 + 100, rectY2, 100, 100);
             } 
         } else {
-            if (rectX2 >= 0 && moveLeft2 == true && rectX2 <= rectX) {
+            if (rectX2 >= 0 && moveLeft2 == true && rectX2 <= rectX && rectY2 - 20 <= rectY) {
                 rectX2 -= speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX2 + 100, rectY2, 100, 100);
@@ -275,30 +275,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //movement/hitboxes logic red
 
-        if (rectX + 100 <= rectX2) { //if red box is left of green one, and is moving right
-            if (rectX <= 700 && moveRight == true) {
+        if (rectX + 100 <= rectX2) { //if red box left of green box
+            if (rectX <= 700 && moveRight == true && rectX + 100 <= rectX2 && rectY - 20 <= rectY2) { //moving right
                 rectX += speed;
                 ctx.fillStyle = "blue";
-                ctx.fillRect(rectX - 100, rectY, 100, 100); 
-            }
-        } else { //if red box is right of green one, and moving right
-            if (rectX <= 700 && moveRight == true) {
-                rectX += speed;
-                ctx.fillStyle = "blue";
-                ctx.fillRect(rectX - 100, rectY, 100, 100); 
-            }
-        } if (rectX + 100 <= rectX2) { //if red box is right of green one, and moving left
-            if (rectX >= 0 && moveLeft == true) { 
-                rectX -= speed;
-                ctx.fillStyle = "blue";
-                ctx.fillRect(rectX + 100, rectY, 100, 100); 
+                ctx.fillRect(rectX - 100, rectY, 100, 100);
             }
         } else {
-            if (rectX >= 0 && moveLeft == true) {
+            if (rectX <= 700 && moveRight == true && rectX >= rectX2 + 96 && rectY - 20 <= rectY2) {
+                rectX += speed;
+                ctx.fillStyle = "blue";
+                ctx.fillRect(rectX - 100, rectY, 100, 100);
+            }
+        } if (rectX >= rectX2 + 100){
+            if (rectX >= 0 && moveLeft == true && rectX >= rectX2 + 100 && rectY - 20 <= rectY2) {
                 rectX -= speed;
                 ctx.fillStyle = "blue";
                 ctx.fillRect(rectX + 100, rectY, 100, 100);
-            }
+            } 
+        } else {
+            if (rectX >= 0 && moveLeft == true && rectX <= rectX2 && rectY - 20 <= rectY2) {
+                rectX -= speed;
+                ctx.fillStyle = "blue";
+                ctx.fillRect(rectX + 100, rectY, 100, 100);
+            } 
         }
         
         //jump logic red
